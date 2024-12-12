@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Estatísticas de Pokémon</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Análise de Estatísticas de Pokémon</h1>
+
+    <!-- Botão para Análise Exploratória -->
+    <div style="margin-bottom: 20px;">
+        <a href="/exploratory" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Ir para Análise Exploratória
+        </a>
+    </div>
+
+    <!-- Formulário para análise de múltiplos Pokémons -->
+    <form action="/analyze" method="POST">
+        <div class="row mb-3">
+            <!-- Seleção de Pokémon -->
+            {% for i in range(1, 7) %}
+            <div class="col-md-4">
+                <label for="pokemon-{{ i }}" class="form-label">Pokémon {{ i }}:</label>
+                <select id="pokemon-{{ i }}" name="pokemon-{{ i }}" class="form-select" required>
+                    <option value="" disabled selected>Selecione</option>
+                    {% for pokemon in pokemons %}
+                        <option value="{{ pokemon }}">{{ pokemon }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Analisar
+        </button>
+    </form>
+
+    <!-- Div para exibição de gráficos -->
+    <div style="margin-top: 40px;">
+        {% if matchup_graph %}
+            <h2>Fraquezas dos Pokémon Selecionados (Heatmap)</h2>
+            <div>{{ matchup_graph|safe }}</div>
+        {% endif %}
+
+        {% if radar_graph %}
+            <h2>Comparativo de Estatísticas (Radar)</h2>
+            <div>{{ radar_graph|safe }}</div>
+        {% endif %}
+
+        {% if bar_graph %}
+            <h2>Estatísticas Empilhadas por Pokémon</h2>
+            <div>{{ bar_graph|safe }}</div>
+        {% endif %}
+
+        {% if mean_radar_graph %}
+            <h2>Estatísticas Médias dos Pokémon Selecionados (Radar)</h2>
+            <div>{{ mean_radar_graph|safe }}</div>
+        {% endif %}
+
+        {% if hist_graph %}
+            <h2>Distribuição de Atributos dos Pokémon Selecionados</h2>
+            <div>{{ hist_graph|safe }}</div>
+        {% endif %}
+
+        {% if individual_bar_graphs %}
+            <h2>Gráficos Individuais de Estatísticas</h2>
+            {% for individual_bar in individual_bar_graphs %}
+            <div style="margin-bottom: 20px;">
+                {{ individual_bar|safe }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

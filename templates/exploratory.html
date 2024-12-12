@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Exploratória</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Análise Exploratória das Estatísticas</h1>
+    <div class="charts">
+        {% for graph in graphs %}
+            <div class="chart">
+                {{ graph|safe }}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
